@@ -50,7 +50,11 @@
 
     <div class="card col-md-6 ">
     {% if session['logedin'] %}
-        <h3>Welcome, {{ session['email']}}</h3>
+        {% if message_log %}
+            <h3>{{ message_log }}, {{ session['email']}}</h3>
+        {% else %}
+            <h3>Welcome back, {{ session['email']}}</h3>
+        {% endif %}
     {% else %}
         <h3>Sign In</h3>
         {% if message_log %}

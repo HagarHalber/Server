@@ -87,7 +87,6 @@ def assigment3_2():
                     session['email'] = username
                     session['logedin'] = True
                     return render_template('assignment3_2.html',
-                                           message_log='Success',
                                            username=username)
                 else:
                     return render_template('assignment3_2.html',
@@ -98,7 +97,7 @@ def assigment3_2():
                 session['email'] = username
                 session['logedin'] = True
                 return render_template('assignment3_2.html',
-                                       message_log='Success',
+                                       message_log='Welcome to our pizza world',
                                        username=username)
     return render_template('assignment3_2.html')
 
