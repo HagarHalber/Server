@@ -10,11 +10,15 @@ app.secret_key = '123'
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=20)
 
-list_pizza = [{'pizza type': 'Margherita', 'sauce': 'tomato', 'topping': 'mozzarella cheese, fresh basil, salt, and extra-virgin olive oil.'},
+list_pizza = [{'pizza type': 'Margherita', 'sauce': 'tomato',
+               'topping': 'mozzarella cheese, fresh basil, salt, and extra-virgin olive oil.'},
               {'pizza type': 'White', 'sauce': 'cream', 'topping': 'olive oil, garlic, cheese, salt'},
-              {'pizza type': 'Hawaiian', 'sauce': 'tomato', 'topping': 'pineapple, tomato sauce, cheese, and either ham or bacon.'},
-              {'pizza type': 'Fungi', 'sauce': 'tomato', 'topping': 'Pomodoro, mozzarella cheese, fresh champignon mushrooms, fried onions and chopped parsley.'},
-              {'pizza type': 'Spicy Pizza', 'sauce': 'tomato', 'topping': 'Green base, mozzarella cheese, roasted eggplant, zucchini, halafinio, garlic confit, and hot chili sauce.'}]
+              {'pizza type': 'Hawaiian', 'sauce': 'tomato',
+               'topping': 'pineapple, tomato sauce, cheese, and either ham or bacon.'},
+              {'pizza type': 'Fungi', 'sauce': 'tomato',
+               'topping': 'Pomodoro, mozzarella cheese, fresh champignon mushrooms, fried onions and chopped parsley.'},
+              {'pizza type': 'Spicy Pizza', 'sauce': 'tomato',
+               'topping': 'Green base, mozzarella cheese, roasted eggplant, zucchini, halafinio, garlic confit, and hot chili sauce.'}]
 user_dict = {
     'Revital': '1919',
     'Hagar': '1234',
@@ -23,21 +27,26 @@ user_dict = {
     'Avishag': '2689'
 }
 
+
 @app.route('/')
 def HomePage():  # put application's code here
     return render_template('HomePage.html')
+
 
 @app.route('/home')
 def Home():
     return redirect('/')
 
+
 @app.route('/about')
-def About(): # put application's code here
+def About():  # put application's code here
     return render_template('AboutUsPage.html')
+
 
 @app.route('/contact')
 def Contact():  # put application's code here
     return render_template('ContactUsPage.html')
+
 
 @app.route('/assignment3_1')
 def assignment3():  # put application's code here
@@ -48,6 +57,7 @@ def assignment3():  # put application's code here
                            Pizza=Pizza,
                            Topping=Topping,
                            Dessert=Dessert)
+
 
 @app.route('/assignment3_2', methods=['GET', 'POST'])
 def assigment3_2():
@@ -68,29 +78,37 @@ def assigment3_2():
                                    topping=my_item['topping'])
 
     elif request.method == 'POST':
-        username = request.form['email']
-        password = request.form['password']
-        if username in user_dict:
-            real_pas = user_dict[username]
-            if real_pas == password:
+        if 'email' in request.form and 'password' in request.form:
+            username = request.form['email']
+            password = request.form['password']
+            if username in user_dict:
+                real_pas = user_dict[username]
+                if real_pas == password:
+                    session['email'] = username
+                    session['logedin'] = True
+                    return render_template('assignment3_2.html',
+                                           message_log='Success',
+                                           username=username)
+                else:
+                    return render_template('assignment3_2.html',
+                                           message_log='Wrong password!')
+            else:
+                user_dict[username] = password
+                print(user_dict)
                 session['email'] = username
                 session['logedin'] = True
                 return render_template('assignment3_2.html',
                                        message_log='Success',
                                        username=username)
-            else:
-                return render_template('assignment3_2.html',
-                                       message_log='Wrong password!')
-        else:
-            return render_template('assignment3_2.html',
-                                   message_log='User not exists, please sign in!')
     return render_template('assignment3_2.html')
+
 
 @app.route('/log_out')
 def logout_func():
     session['logedin'] = False
     session.clear()
     return redirect(url_for('assigment3_2'))
+
 
 @app.route('/session')
 def session_func():
