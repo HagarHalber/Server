@@ -55,6 +55,11 @@
         {% else %}
             <h3>Welcome back, {{ session['email']}}</h3>
         {% endif %}
+        {% if users %}
+            {% for user in users %}
+               <h6>{{ user }}</h6>
+            {% endfor %}
+        {% endif %}
     {% else %}
         <h3>Sign In</h3>
         {% if message_log %}
@@ -62,7 +67,7 @@
         {% endif %}
     <div class="card-body">
      <form action="/assignment3_2" method="post">
-     <div class="form-row">
+      <div class="form-row">
         <div class="form-group col-md-6">
         <input name="email" id="email" type="text" placeholder="abc@def.com" class="input_signUp" required><br><br>
         <input  name="password" id="password" type="password" placeholder="Password" class="input_signUp"  minlength="4" required><br><br>
@@ -76,7 +81,6 @@
     {% endif %}
     </div>
     </div>
-
 </div>
 </div>
 {% endblock %}

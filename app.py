@@ -19,6 +19,7 @@ list_pizza = [{'pizza type': 'Margherita', 'sauce': 'tomato',
                'topping': 'Pomodoro, mozzarella cheese, fresh champignon mushrooms, fried onions and chopped parsley.'},
               {'pizza type': 'Spicy Pizza', 'sauce': 'tomato',
                'topping': 'Green base, mozzarella cheese, roasted eggplant, zucchini, halafinio, garlic confit, and hot chili sauce.'}]
+
 user_dict = {
     'Revital': '1919',
     'Hagar': '1234',
@@ -86,8 +87,10 @@ def assigment3_2():
                 if real_pas == password:
                     session['email'] = username
                     session['logedin'] = True
+                    print(user_dict)
                     return render_template('assignment3_2.html',
-                                           username=username)
+                                           username=username,
+                                           users=user_dict)
                 else:
                     return render_template('assignment3_2.html',
                                            message_log='Wrong password!')
@@ -98,7 +101,8 @@ def assigment3_2():
                 session['logedin'] = True
                 return render_template('assignment3_2.html',
                                        message_log='Welcome to our pizza world',
-                                       username=username)
+                                       username=username,
+                                       users=user_dict)
     return render_template('assignment3_2.html')
 
 

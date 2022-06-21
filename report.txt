@@ -9,3 +9,4 @@ https://wolt.com/he/isr/jerusalem?utm_source=google&utm_medium=cpc&utm_term=wolt
 https: = protocol
 wolt.com = hostname
 he/isr/jerusalem?utm_source=google&utm_medium=cpc&utm_term=wolt&utm_campaign=ISR_Web_FTU_Search_Brand_Jerusalem_HE&gclid=CjwKCAjwqauVBhBGEiwAXOepkSLduR24VHj-oCbtGBwgq-ez33SkJJpi1Gut1J0GOPAjL6X0xc6WiRoCnJYQAvD_BwE = relative path
+
