@@ -4,83 +4,89 @@
 {% block Bootstrap %} {{ super() }} {% endblock %}
 {% block id %}Sign_In_body{% endblock %}
 {% block contect %}
-    <div class="container" >
-    <div class="main">
-    <div class="row ">
-    <div class="card col-md-6 ">
-    <div class="card-body">
-     <form action="/assignment3_2">
-     <div class="form-title">
-            <h3>Search the pizza you like...</h3>
-     </div>
-     <div class="form-row">
-        <div class="form-group col-md-6">
-        <label for="product_type">Pizza Type:</label>
-        <input type="text" class="form-control" id="product_type" name="product_type" >
-        </div>
-     </div>
-     <div class="form-row">
-       <input type="submit" value="Find">
-     </div>
-     </form>
-    </div>
+    <div class="container">
+        <div class="main">
+            <div class="row ">
+                <div class="card col-md-6 ">
+                    <div class="card-body">
+                        <form action="/assignment3_2">
+                            <div class="form-title">
+                                <h3>Search the pizza you like...</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="product_type">Pizza Type:</label>
+                                    <input type="text" class="form-control" id="product_type" name="product_type">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <input type="submit" value="Find">
+                            </div>
+                        </form>
+                    </div>
 
-    {% if product_type %}
-            <div class="card_body">
-                <h6>Name: {{ product_type }}</h6> <br>
-                <h6>Sauce: {{ ingredients }}</h6><br>
-                <h6>Topping: {{ topping }}</h6>
+                    {% if product_type %}
+                        <div class="card_body">
+                            <h6>Name: {{ product_type }}</h6> <br>
+                            <h6>Sauce: {{ ingredients }}</h6><br>
+                            <h6>Topping: {{ topping }}</h6>
+                        </div>
+                    {% endif %}
+
+                    {% if message %}
+                        <h3 style="color: red">{{ message }}</h3>
+                    {% endif %}
+
+                    {% if pizza %}
+                        <ol>
+                            {% for dicts in pizza %}
+                                <h6>Name: {{ dicts['pizza type'] }}</h6>
+                                <h6>Sauce: {{ dicts['sauce'] }}</h6>
+                                <h6>Topping: {{ dicts['topping'] }}</h6>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+                </div>
+                <div class="card col-md-6 ">
+                    {% if session['logedin'] %}
+                        {% if message_log %}
+                            <h3>{{ message_log }}, {{ session['name'] }}</h3>
+                        {% else %}
+                            <h3>Welcome back, {{ session['name'] }}</h3>
+                        {% endif %}
+                        {% if users %}
+                            {% for k, v in users.items() %}
+                                <h6 style="color: black">Email: {{ k }} ,Name: {{ v }} </h6>
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        <h3>Sign In</h3>
+                        {% if message_log %}
+                            <h3>{{ message_log }}</h3>
+                        {% endif %}
+                        <div class="card-body">
+                            <form action="/assignment3_2" method="post">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <input name="email" id="email" type="text" placeholder="abc@def.com"
+                                               class="input_signUp" required><br><br>
+                                        <input name="name" id="name" type="text" placeholder="Name"
+                                               class="input_signUp" required><br><br>
+                                        <div class="form-group col-md-6">
+                                            <button type="submit">Sign In</button>
+                                        </div>
+                                        {% if users %}
+                                            {% for k, v in users.items() %}
+                                                <h6 style="color: black">Email: {{ k }} ,Name: {{ v }} </h6>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-    {% endif %}
-
-    {% if message %}
-         <h3 style="color: red">{{ message }}</h3>
-    {% endif %}
-
-    {% if pizza %}
-        <ol>
-            {% for dicts in pizza %}
-                <h6>Name: {{ dicts['pizza type'] }}</h6>
-                <h6>Sauce: {{ dicts['sauce'] }}</h6>
-                <h6>Topping: {{ dicts['topping'] }}</h6>
-            {% endfor %}
-        </ol>
-    {% endif %}
-    </div>
-
-    <div class="card col-md-6 ">
-    {% if session['logedin'] %}
-        {% if message_log %}
-            <h3>{{ message_log }}, {{ session['email']}}</h3>
-        {% else %}
-            <h3>Welcome back, {{ session['email']}}</h3>
-        {% endif %}
-        {% if users %}
-            {% for user in users %}
-               <h6>{{ user }}</h6>
-            {% endfor %}
-        {% endif %}
-    {% else %}
-        <h3>Sign In</h3>
-        {% if message_log %}
-            <h3>{{ message_log }}</h3>
-        {% endif %}
-    <div class="card-body">
-     <form action="/assignment3_2" method="post">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-        <input name="email" id="email" type="text" placeholder="abc@def.com" class="input_signUp" required><br><br>
-        <input  name="password" id="password" type="password" placeholder="Password" class="input_signUp"  minlength="4" required><br><br>
-         <div class="form-group col-md-6">
-         <button type="submit">Sign In</button>
-         </div>
         </div>
-     </div>
-     </form>
     </div>
-    {% endif %}
-    </div>
-    </div>
-</div>
-</div>
 {% endblock %}

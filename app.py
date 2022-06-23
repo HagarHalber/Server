@@ -21,11 +21,11 @@ list_pizza = [{'pizza type': 'Margherita', 'sauce': 'tomato',
                'topping': 'Green base, mozzarella cheese, roasted eggplant, zucchini, halafinio, garlic confit, and hot chili sauce.'}]
 
 user_dict = {
-    'Revital': '1919',
-    'Hagar': '1234',
-    'Itamar': '123456',
-    'Eden': '2204',
-    'Avishag': '2689'
+    'Revital@post.com': 'Revital',
+    'Hagar@post.com': 'Hagar',
+    'Itamar@post.com': 'Itamar',
+    'Eden@post.com': 'Eden',
+    'Avishag@post.com': 'Avishag'
 }
 
 
@@ -66,44 +66,44 @@ def assigment3_2():
         product_type = request.args['product_type']
         if product_type == '':
             return render_template('assignment3_2.html',
-                                   pizza=list_pizza)
+                                   pizza=list_pizza,
+                                   users=user_dict)
 
         my_item = next((item for item in list_pizza if item['pizza type'] == product_type), None)
         if my_item is None:
             return render_template('assignment3_2.html',
-                                   message='Pizza Not Found.')
+                                   message='Pizza Not Found.',
+                                   users=user_dict)
         else:
             return render_template('assignment3_2.html',
                                    product_type=product_type,
                                    ingredients=my_item['sauce'],
-                                   topping=my_item['topping'])
+                                   topping=my_item['topping'],
+                                   users=user_dict)
 
     elif request.method == 'POST':
-        if 'email' in request.form and 'password' in request.form:
-            username = request.form['email']
-            password = request.form['password']
-            if username in user_dict:
-                real_pas = user_dict[username]
-                if real_pas == password:
-                    session['email'] = username
-                    session['logedin'] = True
-                    print(user_dict)
-                    return render_template('assignment3_2.html',
-                                           username=username,
-                                           users=user_dict)
-                else:
-                    return render_template('assignment3_2.html',
-                                           message_log='Wrong password!')
-            else:
-                user_dict[username] = password
+        if 'email' in request.form and 'name' in request.form:
+            email = request.form['email']
+            name = request.form['name']
+            if email in user_dict:
+                session['email'] = email
+                session['name'] = name
+                session['logedin'] = True
                 print(user_dict)
-                session['email'] = username
+                return render_template('assignment3_2.html',
+                                       username=name,
+                                       users=user_dict)
+
+            else:
+                user_dict[email] = name
+                print(user_dict)
+                session['email'] = email
                 session['logedin'] = True
                 return render_template('assignment3_2.html',
                                        message_log='Welcome to our pizza world',
-                                       username=username,
+                                       username=name,
                                        users=user_dict)
-    return render_template('assignment3_2.html')
+    return render_template('assignment3_2.html', users=user_dict)
 
 
 @app.route('/log_out')
